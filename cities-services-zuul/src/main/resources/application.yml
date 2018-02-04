@@ -1,0 +1,46 @@
+spring:
+  profiles.active: production
+
+---
+
+endpoints:
+  info:
+    enabled: true
+    sensitive: false
+
+  health:
+    sensitive: false
+    
+  metrics:
+    sensitive: false
+  
+  routes:
+    enabled: true
+
+
+spring:
+    profiles: production
+    application:
+        name: cities-zuul-loadbalancer 
+  
+server:
+    port:     8100  
+
+eureka:
+    client:
+        serviceUrl:
+            defaultZone:     ${EUREKA_URI:http://cities-services-registry:8770/eureka}
+        healthcheck:
+            enabled: true
+        instance:
+            leaseRenewalIntervalInSeconds: 15
+            preferIpAddress:  true
+
+zuul:
+  routes:
+    cities:
+      path: /cities/**
+      url: http://cities-services-zuul:8100/cities-management-service/cities
+    paths:
+      path: /paths/**
+      url: http://cities-services-zuul:8100/city-paths-finder/paths

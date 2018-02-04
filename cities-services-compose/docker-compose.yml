@@ -1,0 +1,30 @@
+version:  '2'
+services:
+  eureka:  
+    build: ../cities-services-registry
+    container_name: cities-services-registry
+    ports:
+    - "8770:8770"
+  zuul:  
+    build: ../cities-services-zuul
+    container_name: cities-services-zuul
+    links: 
+    - "eureka:cities-management"
+    ports:
+    - "8100:8100"    
+  cities-management:  
+    build: ../cities-management-service
+    container_name: cities-management
+    links: 
+    - "eureka"
+    ports:
+    - "8080:8080"
+  cites-path-finder:  
+    build: ../cities-path-finder-service
+    container_name: cities-path-finder
+    links: 
+    - "cities-management:eureka"
+    depends_on:
+    - cities-management
+    ports:
+      - "8090:8090"

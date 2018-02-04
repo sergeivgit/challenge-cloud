@@ -1,0 +1,42 @@
+spring:
+  profiles.active: production
+
+---
+
+endpoints:
+  info:
+    enabled: true
+    sensitive: false
+
+  health:
+    sensitive: false
+    
+  metrics:
+    sensitive: false
+
+server:
+    port:     8090
+
+spring:
+    profiles: production
+    application:
+        name: city-paths-finder 
+
+citiesPathConfiguration:
+     # 2 choices: DIJKSTRA, FORD 
+     strategy: DIJKSTRA
+     # Eureka regitered name for cities-management service
+     citiesServiceEurekaName: cities-management-service
+     # cities-management service api endpoint
+     citiesServiceAPI: /cities
+     
+eureka:
+    client:
+        serviceUrl:
+            defaultZone:     ${EUREKA_URI:http://cities-services-registry:8770/eureka}
+        healthcheck:
+            enabled: true
+        instance:
+            leaseRenewalIntervalInSeconds: 15
+            preferIpAddress:  true
+     
