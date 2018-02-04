@@ -1,0 +1,151 @@
+{
+	"variables": [],
+	"info": {
+		"name": "cities population",
+		"_postman_id": "70e1147f-23c4-4ac4-ab51-8c73a20d19bb",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "localhost:8080/cities 1",
+			"request": {
+				"url": "localhost:8080/cities",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \n\"city\": \"Zaragoza\",\n\"city_destination\": \"Barcelona\",\n\"departure_time\": \"08:30\",\n \"arrival_time\": \"11:45\"\n}"
+				},
+				"description": null
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/cities 2",
+			"request": {
+				"url": "localhost:8080/cities",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \n\"city\": \"Lleida\",\n\"city_destination\": \"Barcelona\",\n\"departure_time\": \"08:30\",\n \"arrival_time\": \"10:30\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/cities 3",
+			"request": {
+				"url": "localhost:8080/cities",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \n\"city\": \"Huesca\",\n\"city_destination\": \"Lleida\",\n\"departure_time\": \"08:30\",\n \"arrival_time\": \"09:30\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/cities",
+			"request": {
+				"url": "localhost:8080/cities",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \n\"city\": \"Zaragoza\",\n\"city_destination\": \"Huesca\",\n\"departure_time\": \"08:30\",\n \"arrival_time\": \"09:30\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/cities 5",
+			"request": {
+				"url": "localhost:8080/cities",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \n\"city\": \"Zaragoza\",\n\"city_destination\": \"Madrid\",\n\"departure_time\": \"08:30\",\n \"arrival_time\": \"11:30\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/cities 6",
+			"request": {
+				"url": "localhost:8080/cities",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \n\"city\": \"Guadalajara\",\n\"city_destination\": \"Madrid\",\n\"departure_time\": \"08:30\",\n \"arrival_time\": \"09:30\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/cities 7",
+			"request": {
+				"url": "localhost:8080/cities",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \n\"city\": \"Zaragoza\",\n\"city_destination\": \"Guadalajara\",\n\"departure_time\": \"08:30\",\n \"arrival_time\": \"09:30\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

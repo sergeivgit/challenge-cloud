@@ -1,0 +1,136 @@
+swagger: '2.0'
+info:
+  description: >-
+    This is a simple service able to find all the routes from a city to all
+    posible destinations based in a list of routes previosly introduced.
+  version: 1.0.0
+  title: cities-path-finder-service
+  contact:
+    email: sergio.oconcer@gmail.com
+host: cities-path-finder
+tags:
+  - name: "paths"
+    description: >-
+      Gest two lists with the routes for all destinations from a provided city.
+      One  list will contain the shortes connections path and the other the
+      shortest time path.
+schemes:
+  - http
+paths:
+  /paths/{city}:
+    get:
+      summary: >-
+        Find list of destinations with the optimum paths in connection and time
+        for all the destinations from the city
+      description: >-
+        Returns the list of destinations and for every destination the shortest
+        connections path and the shortest time path
+      operationId: getRoutesByCity
+      produces:
+        - application/json
+      parameters:
+        - name: city
+          in: path
+          description: Name of the city to find the routes
+          required: true
+          type: string
+          format: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ResponseRoutesLists'
+        '400':
+          description: >-
+            Error validating request data
+          schema:
+            $ref: '#/definitions/ApiError'            
+        '404':
+          description: >-
+            In the body we can have two values for api-status field in the
+            ApiError object: 
+
+            NoRoutes: when there are no routes from the city
+
+            CityNotFound: when the city does not exist in the routes database
+          schema:
+            $ref: '#/definitions/ApiError'
+        '500':
+          description: >-
+            Internal server error            
+definitions:
+  Route:
+    type: object
+    properties:
+      duration:
+        type: integer
+        format: int
+      id:
+        type: string
+      city:
+        type: string
+      city_destination:
+        type: string
+      departure_time:
+        type: string
+        description: "time format HH:MM, error if not in this format"
+      arrival_time:
+        type: string
+        description: "time format HH:MM, error if not in this format"        
+  RoutesLists:
+    type: object
+    properties:
+      city-origin:
+        type: string
+      city-destination:
+        type: string
+      shortest-connections-route:
+        type: array
+        items:
+          $ref: '#/definitions/Route'
+      shortest-time-route:
+        type: array
+        items:
+          $ref: '#/definitions/Route'
+  ResponseRoutesLists:
+    type: array
+    items:
+      $ref: '#/definitions/RoutesLists'
+  ApiError:
+    type: object
+    properties:
+      api-status:
+        type: string
+      timestamp:
+        type: object
+        properties:
+          year:
+            type: integer
+            format: int
+          month:
+            type: string
+          dayOfMonth:
+            type: integer
+            format: int
+          dayOfYear:
+            type: integer
+            format: int
+          monthValue:
+            type: integer
+            format: int
+          hour:
+            type: integer
+            format: int
+          minute:
+            type: integer
+            format: int
+          second:
+            type: integer
+            format: int
+      message:
+        type: string
+      debugmessage:
+        type: string
+externalDocs:
+  description: Find out more about Swagger
+  url: 'http://swagger.io'

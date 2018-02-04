@@ -1,0 +1,249 @@
+swagger: '2.0'
+info:
+  description: >-
+    This is a service to perform CRUD (create/read/update/delete) operations for city routes.
+  version: 1.0.0
+  title: cities-management-service
+  contact:
+    email: sergio.oconcer@gmail.com
+host: cities-management
+tags:
+  - name: cities
+    description: Service to create/read/update/delete city routes to be later on used.
+  - name: cities/{city}
+    description: Service to read/delete city routes for a certain city.
+schemes:
+- "http"
+paths:
+  /cities:
+    post:
+      summary: >-
+        Create a city route
+      description: >-
+        Creates a city route and stores it.
+      operationId: addCityRoute
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: city-route
+          description:  >-
+            City route definition data: origin, destination, departure time, arrival time
+          required: true
+          schema:
+            $ref: '#/definitions/Route'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Route'
+        '400':
+          description: >-
+            In the body we can have these values for api-status field in the
+            ApiError object: 
+
+            BadDepartureArrivalTime: when there are incoherences in departure and arrival time, for example if departure time is after arrival time
+
+            DataError: error getting the data from the request
+            
+            NoText: when cities, or other fields are empty
+          schema:
+            $ref: '#/definitions/ApiError'
+        '500':
+          description: internal server error
+    put:
+      summary: >-
+        Updates a city route
+      description: >-
+        Updates a city route and stores it.
+      operationId: updateCityRoute
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: city-route
+          description:  >-
+            City route definition data: id, origin, destination, departure time, arrival time
+          required: true
+          schema:
+            $ref: '#/definitions/Route'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Route'
+        '400':
+          description: >-
+            In the body we can have these values for api-status field in the
+            ApiError object: 
+
+            BadDepartureArrivalTime: when there are incoherences in departure and arrival time, for example if departure time is after arrival time
+
+            DataError: error getting the data from the request
+            
+            NoText: when cities, or other fields are empty
+          schema:
+            $ref: '#/definitions/ApiError'
+        '500':
+          description: internal server error
+    get:
+      summary: >-
+        Gets all the city routes
+      description: >-
+        Gets the list of all the routes
+      operationId: getRoutes
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/RoutesLists'
+        '404':
+          description: >-
+            In the body we can have these values for api-status field in the
+            ApiError object: 
+
+            NoRoutes: there are no routes stroed in the database
+
+          schema:
+            $ref: '#/definitions/ApiError'
+        '500':
+          description: internal server error
+    delete:
+      summary: >-
+        Deletes all the city routes
+      description: >-
+        Deletes all the city routes from database
+      operationId: delRoutesForCity
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+        '500':
+          description: internal server error          
+  /cities/{city}:
+    get:
+      summary: >-
+        Gets all the city routes from {city}
+      description: >-
+        Gets the list of all the routes with the city in the argument as city origin.
+      operationId: getRoutesForCity
+      parameters:
+      - name: "city"
+        in: "path"
+        description: "City name"
+        required: true
+        type: "string"
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/RoutesLists'
+        '404':
+          description: >-
+            In the body we can have these values for api-status field in the
+            ApiError object: 
+            NoCity: the city does not exist
+            NoRoutes: no routes found in the database
+          schema:
+            $ref: '#/definitions/ApiError'
+        '500':
+          description: internal server error  
+    delete:
+      summary: >-
+        Gets all the city routes from {city}
+      description: >-
+        Gets the list of all the routes with the city in the argument as city origin.
+      operationId: delRoutes
+      parameters:
+      - name: "city"
+        in: "path"
+        description: "City name"
+        required: true
+        type: "string"     
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/RoutesLists'
+        '404':
+          description: >-
+            In the body we can have these values for api-status field in the
+            ApiError object: 
+            NoCity: the city does not exist
+
+          schema:
+            $ref: '#/definitions/ApiError'
+        '500':
+          description: internal server error    
+definitions:
+  Route:
+    type: object
+    properties:
+      duration:
+        type: integer
+        format: int
+      id:
+        type: string
+      city:
+        type: string
+      city_destination:
+        type: string
+      departure_time:
+        type: string
+        description: "time format HH:MM, error if not in this format"
+      arrival_time:
+        type: string
+        description: "time format HH:MM, error if not in this format"
+  RoutesLists:
+    type: array
+    items:
+      $ref: '#/definitions/Route'
+  ApiError:
+    type: object
+    properties:
+      api-status:
+        type: string
+      timestamp:
+        type: object
+        properties:
+          year:
+            type: integer
+            format: int
+          month:
+            type: string
+          dayOfMonth:
+            type: integer
+            format: int
+          dayOfYear:
+            type: integer
+            format: int
+          monthValue:
+            type: integer
+            format: int
+          hour:
+            type: integer
+            format: int
+          minute:
+            type: integer
+            format: int
+          second:
+            type: integer
+            format: int
+      message:
+        type: string
+      debugmessage:
+        type: string
+externalDocs:
+  description: Find out more about Swagger
+  url: 'http://swagger.io'
